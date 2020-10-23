@@ -1,7 +1,6 @@
-﻿using CaseManager.Common.Mappings;
-using CaseManager.Data;
-using CaseManager.Data.Common;
-using CaseManager.Models.Common;
+﻿using DigitalReceipt.Common.Mappings;
+using DigitalReceipt.Data;
+using DigitalReceipt.Data.Common;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -13,10 +12,10 @@ namespace CaseManager.Services
 {
     public abstract class BaseService<T, TKey> : IBaseService<T, TKey> where T : Entity<TKey>
     {
-        private readonly CaseManagerDbContext context;
+        private readonly ApplicationDbContext context;
         private readonly DbSet<T> dbSet;
 
-        public BaseService(CaseManagerDbContext context)
+        public BaseService(ApplicationDbContext context)
         {
             this.context = context;
             dbSet = context.Set<T>();
@@ -62,83 +61,6 @@ namespace CaseManager.Services
             model.To<T>(entity);
             dbSet.Update(entity);
             await context.SaveChangesAsync();
-        }
-
-        public async Task Update<TEntity>(
-            ICollection<TEntity> currentEntites,
-            IEnumerable<IIdentifiableEntity<int?>> inputModels)
-            where TEntity : Entity<int>
-        {
-            Update(currentEntites, inputModels, out IEnumerable<TEntity> entitesToAdd);
-
-            await context.Set<TEntity>().AddRangeAsync(entitesToAdd);
-        }
-
-        public void Update<TEntity>(
-            ICollection<TEntity> currentEntites,
-            IEnumerable<IIdentifiableEntity<int?>> inputModels,
-            out IEnumerable<TEntity> entitiesToAdd)
-            where TEntity : Entity<int>
-        {
-            if(inputModels == null)
-            {
-                inputModels = new List<IIdentifiableEntity<int?>>();
-            }
-            if(!currentEntites.Any() && !inputModels.Any())
-            {
-                entitiesToAdd = new List<TEntity>();
-                return;
-            }
-
-            DbSet<TEntity> entites = context.Set<TEntity>();
-
-            // Remove entites which are maraked as deleted
-            IEnumerable<TEntity> entitiesToDelete = GetEneitiesToDelete(currentEntites, inputModels);
-            entites.RemoveRange(entitiesToDelete);
-
-            // Update the entites which are marked for update
-            UpdateEntites(currentEntites, inputModels, entites);
-
-            // Get the entites which are added
-            entitiesToAdd = GetEntitesToAdd<TEntity>(inputModels);
-        }
-
-        public IEnumerable<TEntity> GetEntitesToAdd<TEntity>(
-            IEnumerable<IIdentifiableEntity<int?>> inputModels) 
-            where TEntity : Entity<int> => inputModels
-                        .Where(i => i.Id == null || !i.Id.HasValue)
-                        .Select(model => model.To<TEntity>());
-
-        public void UpdateEntites<TEntity>(
-            ICollection<TEntity> currentEntites, IEnumerable<IIdentifiableEntity<int?>> inputModels, 
-            DbSet<TEntity> entites) 
-            where TEntity : Entity<int>
-        {
-            foreach (IIdentifiableEntity<int?> inputModel in inputModels.Where(m => m.Id != null && m.Id.HasValue))
-            {
-                TEntity targertEntity = currentEntites.FirstOrDefault(c => c.Id == inputModel.Id.Value);
-                if (targertEntity != null)
-                {
-                    inputModel.To<TEntity>(targertEntity);
-                    entites.Update(targertEntity);
-                }
-            }
-        }
-
-        public IEnumerable<TEntity> GetEneitiesToDelete<TEntity>(
-            ICollection<TEntity> currentEntites, 
-            IEnumerable<IIdentifiableEntity<int?>> inputModels) 
-            where TEntity : Entity<int>
-        {
-            var entityIds = new HashSet<int>(
-                inputModels
-                .Where(i => i.Id != null && i.Id.HasValue)
-                .Select(i => i.Id.Value));
-
-            IEnumerable<TEntity> entitiesToDelete = currentEntites
-                .Where(c => !entityIds.Contains(c.Id));
-
-            return entitiesToDelete;
         }
 
         public virtual bool Exists(Expression<Func<T, bool>> expression) => dbSet.Any(expression);
