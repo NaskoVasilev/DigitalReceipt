@@ -5,9 +5,8 @@ using System.Reflection;
 
 using AutoMapper;
 using AutoMapper.Configuration;
-using DigitalReceipt.Common.Mappings;
 
-namespace CaseManager.Common.Mappings
+namespace DigitalReceipt.Common.Mappings
 {
     public static class AutoMapperConfig
     {

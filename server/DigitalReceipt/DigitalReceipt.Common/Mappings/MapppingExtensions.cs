@@ -5,7 +5,7 @@ using System.Linq.Expressions;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 
-namespace CaseManager.Common.Mappings
+namespace DigitalReceipt.Common.Mappings
 {
     public static class MappingExtensions
     {
@@ -35,7 +35,7 @@ namespace CaseManager.Common.Mappings
 
         public static Destination To<Destination>(this object source) => AutoMapperConfig.MapperInstance.Map<Destination>(source);
 
-        public static Destination To<Destination>(this object source, object destination) => 
+        public static Destination To<Destination>(this object source, object destination) =>
             (Destination)AutoMapperConfig.MapperInstance.Map(source, destination, source.GetType(), destination.GetType());
 
         public static Destination To<Source, Destination>(this Source source, Destination destination, Action<IMappingOperationOptions<Source, Destination>> options) =>
