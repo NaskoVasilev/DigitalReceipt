@@ -5,6 +5,14 @@ VisualStudioVersion = 16.0.30611.23
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalReceipt.Server", "DigitalReceipt.Server\DigitalReceipt.Server.csproj", "{96A96552-56C3-4FEA-8D0F-6AAF2F5E2E17}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalReceipt.Services", "DigitalReceipt.Services\DigitalReceipt.Services.csproj", "{69FAA94C-4207-4DC4-B464-172BA19DF8E3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalReceipt.Data", "DigitalReceipt.Data\DigitalReceipt.Data.csproj", "{55766C0F-ACF7-460C-8E92-FF0CA61B6803}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalReceipt.Common", "DigitalReceipt.Common\DigitalReceipt.Common.csproj", "{A68DF443-02E7-4F6B-8F16-C9BEF8BD645D}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DigitalReceipt.Models", "DigitalReceipt.Models\DigitalReceipt.Models.csproj", "{50D77BB2-2CC9-4B91-A922-5A83B3EAB35F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +23,22 @@ Global
 		{96A96552-56C3-4FEA-8D0F-6AAF2F5E2E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{96A96552-56C3-4FEA-8D0F-6AAF2F5E2E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{96A96552-56C3-4FEA-8D0F-6AAF2F5E2E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{69FAA94C-4207-4DC4-B464-172BA19DF8E3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{69FAA94C-4207-4DC4-B464-172BA19DF8E3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{69FAA94C-4207-4DC4-B464-172BA19DF8E3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{69FAA94C-4207-4DC4-B464-172BA19DF8E3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55766C0F-ACF7-460C-8E92-FF0CA61B6803}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55766C0F-ACF7-460C-8E92-FF0CA61B6803}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55766C0F-ACF7-460C-8E92-FF0CA61B6803}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55766C0F-ACF7-460C-8E92-FF0CA61B6803}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68DF443-02E7-4F6B-8F16-C9BEF8BD645D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68DF443-02E7-4F6B-8F16-C9BEF8BD645D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68DF443-02E7-4F6B-8F16-C9BEF8BD645D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68DF443-02E7-4F6B-8F16-C9BEF8BD645D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{50D77BB2-2CC9-4B91-A922-5A83B3EAB35F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{50D77BB2-2CC9-4B91-A922-5A83B3EAB35F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{50D77BB2-2CC9-4B91-A922-5A83B3EAB35F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{50D77BB2-2CC9-4B91-A922-5A83B3EAB35F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
