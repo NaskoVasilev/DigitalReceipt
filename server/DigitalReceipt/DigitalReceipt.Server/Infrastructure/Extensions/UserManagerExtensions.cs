@@ -62,5 +62,25 @@ namespace DigitalReceipt.Server.Infrastructure.Extensions
                 Roles = roles.ToList()
             };
         }
+
+        public static async Task<SignInResult> AuthenticateAsync(this UserManager<User> userManager, User user, string password)
+        {
+            if (user == null)
+            {
+                return SignInResult.Failed;
+            }
+            if (await userManager.IsLockedOutAsync(user))
+            {
+                return SignInResult.LockedOut;
+            }
+            if (!await userManager.CheckPasswordAsync(user, password))
+            {
+                await userManager.AccessFailedAsync(user);
+                return SignInResult.Failed;
+            }
+
+            await userManager.ResetAccessFailedCountAsync(user);
+            return SignInResult.Success;
+        }
     }
 }
