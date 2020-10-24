@@ -15,10 +15,11 @@ namespace DigitalReceipt.Server.Controllers
             this.receiptService = receiptService;
         }
 
+        [HttpPost]
         public async Task<IActionResult> Create(ReceiptInputModel model)
         {
-            var receiptProducst
-            return Ok();
+            var id = await receiptService.Create(model);
+            return Ok(id);
         }
     }
 }

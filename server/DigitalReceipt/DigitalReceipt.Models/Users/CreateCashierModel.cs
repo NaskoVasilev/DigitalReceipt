@@ -1,8 +1,5 @@
 ﻿using static DigitalReceipt.Common.ModelConstants.UserConstants;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.Text;
 using DigitalReceipt.Common.Mappings;
 using DigitalReceipt.Data.Models;
 

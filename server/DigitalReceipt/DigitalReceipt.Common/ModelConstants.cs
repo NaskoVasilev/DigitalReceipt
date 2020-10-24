@@ -14,5 +14,11 @@
             public const int NameMaxLength = 100;
             public const int BarcodeMaxLength = 30;
         }
+
+        public static class CompanyConstants
+        {
+            public const int NameMaxLength = 100;
+            public const int AddressMaxLength = 255;
+        }
     }
 }

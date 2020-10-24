@@ -9,6 +9,7 @@ namespace DigitalReceipt.Server.Infrastructure.Configuration
         {
             services
                 .AddTransient<IUserService, UserService>()
+                .AddTransient<ICompanyService, CompanyService>()
                 .AddTransient<IReceiptService, ReceiptService>();
 
             return services;

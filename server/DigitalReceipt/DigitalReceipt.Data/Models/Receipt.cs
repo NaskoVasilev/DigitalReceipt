@@ -1,6 +1,5 @@
 ﻿using DigitalReceipt.Data.Common;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace DigitalReceipt.Data.Models
@@ -14,15 +13,23 @@ namespace DigitalReceipt.Data.Models
 
         public DateTime Date { get; set; }
 
-        // TODO: extract the address in different table
-        public string Address { get; set; }
-
         public string CashierId { get; set; }
         public User Cashier { get; set; }
 
         public string Number { get; set; }
 
         public string FiscalNumber { get; set; }
+
+        public string UIC { get; set; }
+
+        public int CompanyId { get; set; }
+        public Company Company { get; set; }
+
+        public string TaxNumber { get; set; }
+
+        public string ClientNumber { get; set; }
+
+        public string IdFiscalNumbers { get; set; }
 
         public string UserId { get; set; }
         public User User { get; set; }

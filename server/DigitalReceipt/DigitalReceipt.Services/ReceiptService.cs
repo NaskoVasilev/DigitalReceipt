@@ -18,7 +18,7 @@ namespace DigitalReceipt.Services
             this.context = context;
         }
 
-        public override async Task<int> Create(ReceiptInputModel model)
+        public async Task<int> Create(ReceiptInputModel model)
         {
             var receiptProducts = new List<ReceiptProduct>();
             foreach (var product in model.Products)

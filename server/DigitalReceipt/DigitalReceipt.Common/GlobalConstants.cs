@@ -18,6 +18,7 @@ namespace DigitalReceipt.Common
         public static class Roles
         {
             public const string Administrator = "Administrator";
+            public const string Company = "Company";
             public const string Cashier = "Cashier";
         }
     }
