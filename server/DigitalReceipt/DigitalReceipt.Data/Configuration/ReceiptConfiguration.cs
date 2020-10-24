@@ -17,8 +17,36 @@ namespace DigitalReceipt.Data.Configuration
                 .WithMany(e => e.Receipts);
 
             builder
-                .HasOne(e => e.Cashier)
-                .WithMany(e => e.IssuedReceipts);
+                .Property(e => e.Address)
+                .IsRequired();
+
+            builder
+              .Property(e => e.CashierName)
+              .IsRequired();
+
+            builder
+              .Property(e => e.ClientNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.FiscalNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.IdFiscalNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.Number)
+              .IsRequired();
+
+            builder
+              .Property(e => e.TaxNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.UIC)
+              .IsRequired();
         }
     }
 }

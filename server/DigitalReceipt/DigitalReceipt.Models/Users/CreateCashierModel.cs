@@ -12,6 +12,6 @@ namespace DigitalReceipt.Models.Users
 
         [Required]
         [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
-        public string Password { get; set; }
+        public string Password { get; set; } 
     }
 }

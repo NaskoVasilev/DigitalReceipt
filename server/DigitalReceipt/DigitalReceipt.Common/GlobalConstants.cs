@@ -1,7 +1,4 @@
-﻿using System.Globalization;
-using System.Security.Authentication;
-
-namespace DigitalReceipt.Common
+﻿namespace DigitalReceipt.Common
 {
     public static class GlobalConstants
     {
@@ -18,8 +15,6 @@ namespace DigitalReceipt.Common
         public static class Roles
         {
             public const string Administrator = "Administrator";
-            public const string Company = "Company";
-            public const string Cashier = "Cashier";
         }
     }
 }

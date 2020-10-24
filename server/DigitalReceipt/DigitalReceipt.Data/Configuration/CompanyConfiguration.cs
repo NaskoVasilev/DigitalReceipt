@@ -10,17 +10,8 @@ namespace DigitalReceipt.Data.Configuration
         public void Configure(EntityTypeBuilder<Company> builder)
         {
             builder
-                .Property(e => e.UserId)
-                .HasMaxLength(NameMaxLength)
-                .IsRequired();
-
-            builder
-                .Property(e => e.Address)
-                .HasMaxLength(AddressMaxLength)
-                .IsRequired();
-
-            builder
                 .Property(e => e.Name)
+                .HasMaxLength(NameMaxLength)
                 .IsRequired();
         }
     }
