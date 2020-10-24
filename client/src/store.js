@@ -9,11 +9,37 @@ Vue.use(VueCookies)
 
 const roleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
+const axiosConfig = {
+    baseURL: 'https://localhost:44316',
+    timeout: 30000,
+};
+
+let http = axios.create(axiosConfig)
+
+http.interceptors.request.use(
+    (config) => {
+        config.headers['Content-Type'] = "application/json"
+
+        let token = VueCookies.get('access_token') || null;
+
+        if (token) {
+            config.headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        return config;
+    },
+
+    (error) => {
+        return Promise.reject(error);
+    }
+);
+
 // STATE
 const state = {
     accessToken: VueCookies.get('access_token') || null,
     userEmail: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token')).sub : '',
     userRoles: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token'))[roleClaim] : null,
+    userId: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token'))['nameid'] : '',
 }
 
 // GETTERS
@@ -29,6 +55,9 @@ const getters = {
     },
     hasAdminRights(state) {
         return state.userRoles != null ? state.userRoles.includes('Admin') : false
+    },
+    userId(state) {
+        return state.userId != null ? state.userId : '';
     }
 }
 
@@ -42,6 +71,9 @@ const mutations = {
     },
     SET_USER_ROLES(state, roles) {
         state.userRoles = roles;
+    },
+    SET_USER_ID(state, id) {
+        state.userId = id;
     }
 }
 
@@ -52,16 +84,17 @@ const actions = ({
     },
     retrieveToken(context, credentials) {
         return new Promise((resolve, reject) => {
-            axios.post("api/auth/login", {
+            http.post("/api/Users/Login", {
                 'email': credentials.email,
                 'password': credentials.password
             })
                 .then(response => {
-                    if (response.data.success == true) {
-                        context.commit("SET_TOKEN", response.data.jwt);
-                        VueCookies.set('access_token', response.data.jwt);
-                        context.commit("SET_USER_EMAIL", jwtDecode(response.data.jwt).sub);
-                        context.commit("SET_USER_ROLES", jwtDecode(response.data.jwt)[roleClaim]);
+                    if (response.data) {
+                        context.commit("SET_TOKEN", response.data.token);
+                        VueCookies.set('access_token', response.data.token);
+                        context.commit("SET_USER_EMAIL", jwtDecode(response.data.token).sub);
+                        context.commit("SET_USER_ROLES", jwtDecode(response.data.token)[roleClaim]);
+                        context.commit("SET_USER_ID", response.data.userId);
                     }
 
                     resolve(response);
@@ -76,15 +109,13 @@ const actions = ({
         VueCookies.remove('access_token');
         context.commit("SET_USER_EMAIL", '');
         context.commit("SET_USER_ROLES", null);
+        context.commit("SET_USER_ID", null);
     },
     registerUser(context, credentials) {
         return new Promise((resolve, reject) => {
-            axios.post("api/auth/register", {
+            http.post("api/Users/Register", {
                 'email': credentials.email,
                 'password': credentials.password,
-                'confirmedPassword': credentials.confirmedPassword,
-                'firstName': credentials.firstName,
-                'lastName': credentials.lastName
             })
                 .then(response => {
                     resolve(response);
