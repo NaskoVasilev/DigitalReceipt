@@ -1,6 +1,7 @@
-﻿using CaseManager.Controllers;
-using DigitalReceipt.Models.Receipts;
+﻿using DigitalReceipt.Models.Receipts;
+using DigitalReceipt.Server.Infrastructure.Extensions;
 using DigitalReceipt.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 
@@ -21,5 +22,9 @@ namespace DigitalReceipt.Server.Controllers
             var id = await receiptService.Create(model);
             return Ok(id);
         }
+
+        [Authorize]
+        [HttpGet]
+        public IActionResult Get() => Ok(receiptService.GetUserReceipts(User.GetUserId()));
     }
 }

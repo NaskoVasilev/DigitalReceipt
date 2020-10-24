@@ -21,5 +21,7 @@ namespace DigitalReceipt.Models.Products
         public decimal Discount { get; set; }
 
         public ProductCategory Category { get; set; }
+
+        public int Quantity { get; set; }
     }
 }

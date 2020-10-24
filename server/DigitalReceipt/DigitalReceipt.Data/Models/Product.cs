@@ -19,7 +19,7 @@ namespace DigitalReceipt.Data.Models
 
         public decimal Discount { get; set; }
 
-        public ProductCategory Category { get; set; }
+        public ProductCategory? Category { get; set; }
 
         public ICollection<ReceiptProduct> Receipts { get; set; }
     }

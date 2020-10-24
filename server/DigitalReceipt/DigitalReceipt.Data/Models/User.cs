@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using DigitalReceipt.Data.Enums;
+using Microsoft.AspNetCore.Identity;
 using System.Collections.Generic;
 
 namespace DigitalReceipt.Data.Models
@@ -9,6 +10,8 @@ namespace DigitalReceipt.Data.Models
         {
             Receipts = new HashSet<Receipt>();
         }
+
+        public UserPreferences? Preferences { get; set; }
 
         public ICollection<Receipt> Receipts { get; set; }
     }

@@ -1,5 +1,4 @@
-﻿using CaseManager.Controllers;
-using DigitalReceipt.Common;
+﻿using DigitalReceipt.Common;
 using DigitalReceipt.Common.Settings;
 using DigitalReceipt.Data.Models;
 using DigitalReceipt.Models.Users;
@@ -9,11 +8,12 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using DigitalReceipt.Common.Mappings;
+using DigitalReceipt.Data.Enums;
 using Microsoft.AspNetCore.Authorization;
-using static DigitalReceipt.Common.GlobalConstants;
 
 namespace DigitalReceipt.Server.Controllers
 {
+    [Authorize]
     public class UsersController : ApiController
     {
         private readonly UserManager<User> userManager;
@@ -30,8 +30,9 @@ namespace DigitalReceipt.Server.Controllers
             this.userService = userService;
         }
 
+        [AllowAnonymous]
         [HttpPost(nameof(Login))]
-        public async Task<ActionResult> Login(LoginInputModel model)
+        public async Task<IActionResult> Login(LoginInputModel model)
         {
             User user = await userManager.FindByNameAsync(model.Email);
             Microsoft.AspNetCore.Identity.SignInResult authenticationResult = await userManager.AuthenticateAsync(user, model.Password);
@@ -49,8 +50,9 @@ namespace DigitalReceipt.Server.Controllers
             return Ok(loggedUser);
         }
 
+        [AllowAnonymous]
         [HttpPost(nameof(Register))]
-        public async Task<ActionResult> Register(RegisterInputModel model)
+        public async Task<IActionResult> Register(RegisterInputModel model)
         {
             if (userService.Exists(x => x.Email == model.Email))
             {
@@ -62,6 +64,20 @@ namespace DigitalReceipt.Server.Controllers
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
             return result.ToActionResult();
+        }
+
+        [HttpGet(nameof(Prefernece))] 
+        public IActionResult Prefernece()
+        {
+            UserPreferences? preference = userService.GetById(User.GetUserId(), user => user.Preferences);
+            return Ok(preference?.ToString());
+        }
+
+        [HttpPost(nameof(Prefernece))]
+        public async Task<IActionResult> SetPrefernece(UserPreferenceInputModel model)
+        {
+            await userService.Update(User.GetUserId(), model);
+            return Ok();
         }
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
-namespace CaseManager.Controllers
+namespace DigitalReceipt.Server.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

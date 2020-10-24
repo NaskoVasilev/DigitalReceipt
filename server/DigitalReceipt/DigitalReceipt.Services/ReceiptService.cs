@@ -1,10 +1,9 @@
-﻿using AutoMapper.Internal;
-using CaseManager.Services;
+﻿using CaseManager.Services;
 using DigitalReceipt.Common.Mappings;
 using DigitalReceipt.Data;
 using DigitalReceipt.Data.Models;
+using DigitalReceipt.Models.Products;
 using DigitalReceipt.Models.Receipts;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -30,7 +29,11 @@ namespace DigitalReceipt.Services
                     .Select(p => p.Id)
                     .FirstOrDefault();
 
-                var receiptProduct = new ReceiptProduct();
+                var receiptProduct = new ReceiptProduct() 
+                {
+                    Quantity = product.Quantity
+                };
+
                 if(productId.HasValue)
                 {
                     receiptProduct.ProductId = productId.Value;
@@ -43,14 +46,14 @@ namespace DigitalReceipt.Services
             }
 
             var receipt = model.To<Receipt>();
-            int? companyId = context.Companies
+            int companyId = context.Companies
                 .Where(c => c.Name == model.CompanyName)
                 .Select(c => c.Id)
                 .FirstOrDefault();
 
-            if(companyId.HasValue)
+            if(companyId != default)
             {
-                receipt.CompanyId = companyId.Value;
+                receipt.CompanyId = companyId;
             }
             else
             {
@@ -64,6 +67,22 @@ namespace DigitalReceipt.Services
             await context.Receipts.AddAsync(receipt);
             await context.SaveChangesAsync();
             return receipt.Id;
+        }
+
+        public IList<ReceiptByCompanyViewModel> GetUserReceipts(string userId)
+        {
+            return
+                context.Receipts
+                .Where(r => r.UserId == userId)
+                .To<ReceiptViewModel>()
+                .AsEnumerable()
+                .GroupBy(r => r.CompanyName)
+                .Select(r => new ReceiptByCompanyViewModel
+                {
+                    CompanyName = r.Key,
+                    Receipts = r.ToList()
+                })
+                .ToList();
         }
     }
 }
