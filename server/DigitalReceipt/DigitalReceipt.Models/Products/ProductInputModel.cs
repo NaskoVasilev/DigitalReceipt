@@ -16,5 +16,7 @@ namespace DigitalReceipt.Models.Products
         public string Barcode { get; set; }
 
         public decimal Price { get; set; }
+
+        public decimal Discount { get; set; }
     }
 }

@@ -1,6 +1,9 @@
-﻿namespace DigitalReceipt.Services
+﻿using CaseManager.Services;
+using DigitalReceipt.Data.Models;
+
+namespace DigitalReceipt.Services
 {
-    public interface IReceiptService
+    public interface IReceiptService : IBaseService<Receipt, int>
     {
     }
 }

@@ -11,5 +11,7 @@ namespace DigitalReceipt.Data.Models
         }
 
         public ICollection<Receipt> Receipts { get; set; }
+
+        public ICollection<Receipt> IssuedReceipts { get; set; }
     }
 }

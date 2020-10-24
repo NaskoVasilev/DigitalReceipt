@@ -11,6 +11,14 @@ namespace DigitalReceipt.Data.Configuration
             builder
                 .Property(e => e.UserId)
                 .IsRequired();
+
+            builder
+                .HasOne(e => e.User)
+                .WithMany(e => e.Receipts);
+
+            builder
+                .HasOne(e => e.Cashier)
+                .WithMany(e => e.IssuedReceipts);
         }
     }
 }
