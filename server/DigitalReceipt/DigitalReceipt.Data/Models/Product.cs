@@ -1,4 +1,5 @@
 ﻿using DigitalReceipt.Data.Common;
+using DigitalReceipt.Data.Enums;
 using System.Collections.Generic;
 
 namespace DigitalReceipt.Data.Models
@@ -15,6 +16,10 @@ namespace DigitalReceipt.Data.Models
         public string Barcode { get; set; }
 
         public decimal Price { get; set; }
+
+        public decimal Discount { get; set; }
+
+        public ProductCategory? Category { get; set; }
 
         public ICollection<ReceiptProduct> Receipts { get; set; }
     }

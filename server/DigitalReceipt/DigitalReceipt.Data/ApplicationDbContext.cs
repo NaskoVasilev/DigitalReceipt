@@ -18,6 +18,14 @@ namespace DigitalReceipt.Data
         {
         }
 
+        public DbSet<Receipt> Receipts { get; set; }
+
+        public DbSet<ReceiptProduct> ReceiptProducts { get; set; }
+
+        public DbSet<Product> Products { get; set; }
+
+        public DbSet<Company> Companies { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);

@@ -11,6 +11,50 @@ namespace DigitalReceipt.Data.Configuration
             builder
                 .Property(e => e.UserId)
                 .IsRequired();
+
+            builder
+                .HasOne(e => e.User)
+                .WithMany(e => e.Receipts);
+
+            builder
+              .Property(e => e.CashierName)
+              .IsRequired();
+
+            builder
+              .Property(e => e.ClientNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.FiscalNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.IdFiscalNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.Number)
+              .IsRequired();
+
+            builder
+              .Property(e => e.TaxNumber)
+              .IsRequired();
+
+            builder
+              .Property(e => e.UIC)
+              .IsRequired();
+
+            builder
+             .Property(e => e.StoreAddress)
+             .IsRequired();
+
+            builder
+             .Property(e => e.StoreName)
+             .IsRequired();
+
+            builder
+             .Property(e => e.CompanyAddress)
+             .IsRequired();
         }
     }
 }

@@ -25,7 +25,8 @@ namespace DigitalReceipt.Data.Seeding
             var seeders = new List<ISeeder>
             {
                 new RolesSeeder(),
-                new AdminSeeder()
+                new AdminSeeder(),
+                new ReceiptsSeeder()
             };
 
             foreach (ISeeder seeder in seeders)

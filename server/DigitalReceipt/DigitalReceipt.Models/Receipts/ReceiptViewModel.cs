@@ -1,16 +1,13 @@
-﻿using DigitalReceipt.Data.Common;
+﻿using DigitalReceipt.Models.Products;
 using System;
 using System.Collections.Generic;
+using DigitalReceipt.Common.Mappings;
+using DigitalReceipt.Data.Models;
 
-namespace DigitalReceipt.Data.Models
+namespace DigitalReceipt.Models.Receipts
 {
-    public class Receipt : AuditableEntity<int>
+    public class ReceiptViewModel : IMapFrom<Receipt>
     {
-        public Receipt()
-        {
-            Products = new HashSet<ReceiptProduct>();
-        }
-
         public DateTime Date { get; set; }
 
         public string CashierName { get; set; }
@@ -27,8 +24,7 @@ namespace DigitalReceipt.Data.Models
 
         public string StoreAddress { get; set; }
 
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
+        public string CompanyName { get; set; }
 
         public string TaxNumber { get; set; }
 
@@ -36,9 +32,6 @@ namespace DigitalReceipt.Data.Models
 
         public string IdFiscalNumber { get; set; }
 
-        public string UserId { get; set; }
-        public User User { get; set; }
-
-        public ICollection<ReceiptProduct> Products { get; set; }
+        public IList<ProductViewModel> Products { get; set; }
     }
 }

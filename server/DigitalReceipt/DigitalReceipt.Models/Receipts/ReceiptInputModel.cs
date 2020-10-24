@@ -1,16 +1,14 @@
-﻿using DigitalReceipt.Data.Common;
+﻿using AutoMapper;
+using DigitalReceipt.Common.Mappings;
+using DigitalReceipt.Data.Models;
+using DigitalReceipt.Models.Products;
 using System;
 using System.Collections.Generic;
 
-namespace DigitalReceipt.Data.Models
+namespace DigitalReceipt.Models.Receipts
 {
-    public class Receipt : AuditableEntity<int>
+    public class ReceiptInputModel : IHaveCustomMappings
     {
-        public Receipt()
-        {
-            Products = new HashSet<ReceiptProduct>();
-        }
-
         public DateTime Date { get; set; }
 
         public string CashierName { get; set; }
@@ -21,14 +19,13 @@ namespace DigitalReceipt.Data.Models
 
         public string UIC { get; set; }
 
+        public string CompanyName { get; set; }
+
         public string CompanyAddress { get; set; }
 
         public string StoreName { get; set; }
 
         public string StoreAddress { get; set; }
-
-        public int CompanyId { get; set; }
-        public Company Company { get; set; }
 
         public string TaxNumber { get; set; }
 
@@ -37,8 +34,13 @@ namespace DigitalReceipt.Data.Models
         public string IdFiscalNumber { get; set; }
 
         public string UserId { get; set; }
-        public User User { get; set; }
 
-        public ICollection<ReceiptProduct> Products { get; set; }
+        public IEnumerable<ProductInputModel> Products { get; set; }
+
+        public void CreateMappings(IProfileExpression configuration)
+        {
+            configuration.CreateMap<ReceiptInputModel, Receipt>()
+                .ForMember(m => m.Products, y => y.Ignore());
+        }
     }
 }

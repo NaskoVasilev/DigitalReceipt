@@ -13,7 +13,6 @@ namespace DigitalReceipt.Data.Seeding
         {
             RoleManager<IdentityRole> roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
 
-            await SeedRoleAsync(roleManager, dbContext, Roles.Cashier);
             await SeedRoleAsync(roleManager, dbContext, Roles.Administrator);
         }
 

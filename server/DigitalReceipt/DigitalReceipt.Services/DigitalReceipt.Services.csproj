@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.1</TargetFramework>
@@ -8,6 +8,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DigitalReceipt.Common\DigitalReceipt.Common.csproj" />
     <ProjectReference Include="..\DigitalReceipt.Data\DigitalReceipt.Data.csproj" />
+    <ProjectReference Include="..\DigitalReceipt.Models\DigitalReceipt.Models.csproj" />
   </ItemGroup>
 
 </Project>
