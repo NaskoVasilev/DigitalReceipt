@@ -15,6 +15,7 @@ using DigitalReceipt.Server.Infrastructure.Extensions;
 using DigitalReceipt.Server.Infrastructure.Filters;
 using DigitalReceipt.Common.Mappings;
 using DigitalReceipt.Models.Users;
+using System.Runtime;
 
 namespace DigitalReceipt.Server
 {
@@ -44,6 +45,12 @@ namespace DigitalReceipt.Server
                    options.Lockout.AllowedForNewUsers = true;
                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(AuthenticationConstants.LockoutTimeInMinutes);
                    options.Lockout.MaxFailedAccessAttempts = AuthenticationConstants.MaxFailedAccessAttempts;
+
+                   options.Password.RequireDigit = false;
+                   options.Password.RequiredLength = 6;
+                   options.Password.RequireLowercase = false;
+                   options.Password.RequireNonAlphanumeric = false;
+                   options.Password.RequireUppercase = false;
                })
                .AddDefaultTokenProviders()
                .AddEntityFrameworkStores<ApplicationDbContext>();
