@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
 using DigitalReceipt.Common.Mappings;
+using Microsoft.AspNetCore.Authorization;
+using static DigitalReceipt.Common.GlobalConstants;
 
 namespace DigitalReceipt.Server.Controllers
 {
@@ -52,7 +54,7 @@ namespace DigitalReceipt.Server.Controllers
         {
             if (userService.Exists(x => x.Email == model.Email))
             {
-                return BadRequest("User with the same username already exists.");
+                return BadRequest("User with the same email already exists.");
             }
 
             User user = model.To<User>();
@@ -60,6 +62,28 @@ namespace DigitalReceipt.Server.Controllers
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
             return result.ToActionResult();
+        }
+
+        [HttpPost("cashier")]
+        [Authorize(Roles = Roles.Administrator)]
+        public async Task<ActionResult> Create(CreateCashierModel cashier)
+        {
+            if (userService.Exists(x => x.UserName == cashier.UserName))
+            {
+                return BadRequest("Cashier with the same username already exists.");
+            }
+
+            User user = cashier.To<User>();
+            user.UserName = cashier.UserName;
+            IdentityResult result = await userManager.CreateAsync(user, cashier.Password);
+
+            if (result.Succeeded)
+            {
+                await userManager.AddToRoleAsync(user, Roles.Cashier);
+                return this.Ok();
+            }
+
+            return this.BadRequest("Cashier not created!");
         }
     }
 }

@@ -6,7 +6,7 @@
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <OutputPath>bin\Debug\</OutputPath>
-    <DocumentationFile></DocumentationFile>
+    <DocumentationFile>bin\Debug\DigitalReceipt.Server.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>
