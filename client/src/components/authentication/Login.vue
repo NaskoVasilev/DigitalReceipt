@@ -55,7 +55,11 @@ export default {
                 })
                 .then((response) => {
                     if (response.data) {
-                        this.$router.push({ name: "hello-world" });
+                        if (this.$store.getters.hasAdminRights == true) {
+                            this.$router.push({ name: "home-admin" });
+                        } else {
+                            this.$router.push({ name: "home" });
+                        }
                     } else {
                         alert(response.data.message);
                     }

@@ -7,7 +7,7 @@ import jwtDecode from 'jwt-decode'
 Vue.use(Vuex)
 Vue.use(VueCookies)
 
-const roleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
+// const roleClaim = 'http://schemas.microsoft.com/ws/2008/06/identity/claims/role';
 
 const axiosConfig = {
     baseURL: 'https://localhost:44316',
@@ -37,10 +37,12 @@ http.interceptors.request.use(
 // STATE
 const state = {
     accessToken: VueCookies.get('access_token') || null,
-    userEmail: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token')).sub : '',
-    userRoles: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token'))[roleClaim] : null,
+    userEmail: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token')).email : '',
+    userRoles: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token'))['role'] : null,
     userId: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token'))['nameid'] : '',
 }
+
+console.log(jwtDecode(VueCookies.get('access_token')))
 
 // GETTERS
 const getters = {
@@ -54,7 +56,7 @@ const getters = {
         return state.userRoles;
     },
     hasAdminRights(state) {
-        return state.userRoles != null ? state.userRoles.includes('Admin') : false
+        return state.userRoles != null ? state.userRoles.includes('Administrator') : false
     },
     userId(state) {
         return state.userId != null ? state.userId : '';
@@ -92,8 +94,8 @@ const actions = ({
                     if (response.data) {
                         context.commit("SET_TOKEN", response.data.token);
                         VueCookies.set('access_token', response.data.token);
-                        context.commit("SET_USER_EMAIL", jwtDecode(response.data.token).sub);
-                        context.commit("SET_USER_ROLES", jwtDecode(response.data.token)[roleClaim]);
+                        context.commit("SET_USER_EMAIL", jwtDecode(response.data.token).email);
+                        context.commit("SET_USER_ROLES", response.data.roles);
                         context.commit("SET_USER_ID", response.data.userId);
                     }
 

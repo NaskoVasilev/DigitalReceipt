@@ -1,0 +1,23 @@
+html, body, #app {
+    height: 100%;
+}
+
+.bg-vue {
+    background: #44b684 !important;
+}
+
+.btn-main {
+    background: #44b684 !important;
+    color: #fff !important;
+    border-radius: 0px !important;
+}
+
+::-moz-selection {
+    background: #44b684 !important;
+    color: #fff !important;
+}
+
+::selection {
+    background: #44b684 !important;
+    color: #fff !important;
+}

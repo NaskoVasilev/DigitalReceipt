@@ -1,24 +1,23 @@
 <template>
     <div class="hello">
         <h1>{{ msg }}</h1>
-        <ul>
-            <qrcode :width="600" :value="userId"></qrcode>
+        <ul class="reader-wrapper">
+            <qrcode-stream @decode="onDecode" class="reader"></qrcode-stream>
         </ul>
     </div>
 </template>
 
 <script>
 export default {
-    name: "HelloWorld",
+    data() {
+        return {
+            msg: "Scan your customer's QR code",
+        };
+    },
     computed: {
         userId: function () {
             return this.$store.getters.userId;
         },
-    },
-    data() {
-        return {
-            msg: "Show this to your cashier",
-        };
     },
     methods: {
         logOut: function () {
@@ -32,7 +31,6 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 h3 {
     margin: 40px 0 0;
@@ -48,8 +46,8 @@ li {
 a {
     color: #42b983;
 }
-.reader {
-    width: 200px;
-    height: 200px;
+.reader-wrapper {
+    margin-left: 20%;
+    margin-right: 20%;
 }
 </style>
