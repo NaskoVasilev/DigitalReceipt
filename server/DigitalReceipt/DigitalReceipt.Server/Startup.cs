@@ -83,7 +83,7 @@ namespace DigitalReceipt.Server
             AutoMapperConfig.RegisterMappings(typeof(LoginInputModel).Assembly);
 
             // Uncomment the line below if you want to seed data in your database
-            // app.SeedData();
+            app.SeedData();
 
             if (env.IsDevelopment())
             {
