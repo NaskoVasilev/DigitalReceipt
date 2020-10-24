@@ -8,7 +8,8 @@ namespace DigitalReceipt.Server.Infrastructure.Configuration
         public static IServiceCollection AddBusinessLogic(this IServiceCollection services)
         {
             services
-                .AddTransient<IUserService, UserService>();
+                .AddTransient<IUserService, UserService>()
+                .AddTransient<IReceiptService, ReceiptService>();
 
             return services;
         }
