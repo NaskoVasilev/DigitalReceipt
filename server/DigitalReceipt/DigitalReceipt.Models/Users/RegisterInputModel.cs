@@ -5,7 +5,7 @@ using DigitalReceipt.Data.Models;
 
 namespace DigitalReceipt.Models.Users
 {
-    public class RegisterInputModel : IMapFrom<User>
+    public class RegisterInputModel : IMapTo<User>
     {
         [Required]
         [EmailAddress]
@@ -13,7 +13,7 @@ namespace DigitalReceipt.Models.Users
         public string Email { get; set; }
 
         [Required]
-        [StringLength(PasswordMinLength, MinimumLength = PasswordMaxLength)]
+        [StringLength(PasswordMaxLength, MinimumLength = PasswordMinLength)]
         public string Password { get; set; }
     }
 }

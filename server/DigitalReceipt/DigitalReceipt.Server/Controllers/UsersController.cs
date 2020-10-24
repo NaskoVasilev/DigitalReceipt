@@ -56,6 +56,7 @@ namespace DigitalReceipt.Server.Controllers
             }
 
             User user = model.To<User>();
+            user.UserName = model.Email;
             IdentityResult result = await userManager.CreateAsync(user, model.Password);
 
             return result.ToActionResult();
