@@ -1,8 +1,10 @@
-﻿using CaseManager.Services;
+﻿using AutoMapper.Internal;
+using CaseManager.Services;
 using DigitalReceipt.Common.Mappings;
 using DigitalReceipt.Data;
 using DigitalReceipt.Data.Models;
 using DigitalReceipt.Models.Receipts;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -41,6 +43,23 @@ namespace DigitalReceipt.Services
             }
 
             var receipt = model.To<Receipt>();
+            int? companyId = context.Companies
+                .Where(c => c.Name == model.CompanyName)
+                .Select(c => c.Id)
+                .FirstOrDefault();
+
+            if(companyId.HasValue)
+            {
+                receipt.CompanyId = companyId.Value;
+            }
+            else
+            {
+                receipt.Company = new Company
+                {
+                    Name = model.CompanyName
+                };
+            }
+
             receipt.Products = receiptProducts;
             await context.Receipts.AddAsync(receipt);
             await context.SaveChangesAsync();

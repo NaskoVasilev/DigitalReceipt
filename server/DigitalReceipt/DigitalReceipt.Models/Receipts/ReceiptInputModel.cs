@@ -9,15 +9,31 @@ namespace DigitalReceipt.Models.Receipts
 {
     public class ReceiptInputModel : IHaveCustomMappings
     {
-        public string UserId { get; set; }
+        public DateTime Date { get; set; }
+
+        public string CashierName { get; set; }
 
         public string Number { get; set; }
 
         public string FiscalNumber { get; set; }
 
-        public string CashierId { get; set; }
+        public string UIC { get; set; }
 
-        public DateTime Date { get; set; }
+        public string CompanyName { get; set; }
+
+        public string CompanyAddress { get; set; }
+
+        public string StoreName { get; set; }
+
+        public string StoreAddress { get; set; }
+
+        public string TaxNumber { get; set; }
+
+        public string ClientNumber { get; set; }
+
+        public string IdFiscalNumber { get; set; }
+
+        public string UserId { get; set; }
 
         public IEnumerable<ProductInputModel> Products { get; set; }
 

@@ -9,7 +9,5 @@ namespace DigitalReceipt.Services
     public interface IUserService
     {
         bool Exists(Expression<Func<User, bool>> expression);
-
-        Task LinkToCompany(string companyId, string cashierId);
     }
 }

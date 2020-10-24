@@ -1,4 +1,5 @@
 ﻿using DigitalReceipt.Common.Mappings;
+using DigitalReceipt.Data.Enums;
 using DigitalReceipt.Data.Models;
 using System.ComponentModel.DataAnnotations;
 using static DigitalReceipt.Common.ModelConstants.ProductConstants;
@@ -18,5 +19,7 @@ namespace DigitalReceipt.Models.Products
         public decimal Price { get; set; }
 
         public decimal Discount { get; set; }
+
+        public ProductCategory Category { get; set; }
     }
 }

@@ -63,28 +63,5 @@ namespace DigitalReceipt.Server.Controllers
 
             return result.ToActionResult();
         }
-
-        [HttpPost("Cashier")]
-        [Authorize(Roles = Roles.Company)]
-        public async Task<ActionResult> CreateCashier(CreateCashierModel cashier)
-        {
-            if (userService.Exists(x => x.UserName == cashier.UserName))
-            {
-                return BadRequest("Cashier with the same username already exists.");
-            }
-
-            User user = cashier.To<User>();
-            user.UserName = cashier.UserName;
-            IdentityResult result = await userManager.CreateAsync(user, cashier.Password);
-            
-            if (result.Succeeded)
-            {
-                await userManager.AddToRoleAsync(user, Roles.Cashier);
-                await userService.LinkToCompany(User.GetUserId(), user.Id);
-                return this.Ok();
-            }
-
-            return this.BadRequest("Cashier not created!");
-        }
     }
 }

@@ -17,10 +17,6 @@ namespace DigitalReceipt.Data.Configuration
                 .WithMany(e => e.Receipts);
 
             builder
-                .Property(e => e.Address)
-                .IsRequired();
-
-            builder
               .Property(e => e.CashierName)
               .IsRequired();
 
@@ -47,6 +43,18 @@ namespace DigitalReceipt.Data.Configuration
             builder
               .Property(e => e.UIC)
               .IsRequired();
+
+            builder
+             .Property(e => e.StoreAddress)
+             .IsRequired();
+
+            builder
+             .Property(e => e.StoreName)
+             .IsRequired();
+
+            builder
+             .Property(e => e.CompanyAddress)
+             .IsRequired();
         }
     }
 }

@@ -21,7 +21,11 @@ namespace DigitalReceipt.Data.Models
 
         public string UIC { get; set; }
 
-        public string Address { get; set; }
+        public string CompanyAddress { get; set; }
+
+        public string StoreName { get; set; }
+
+        public string StoreAddress { get; set; }
 
         public int CompanyId { get; set; }
         public Company Company { get; set; }

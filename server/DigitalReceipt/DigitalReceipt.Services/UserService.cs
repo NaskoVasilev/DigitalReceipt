@@ -19,16 +19,5 @@ namespace DigitalReceipt.Services
         }
 
         public bool Exists(Expression<Func<User, bool>> expression) => context.Users.Any(expression);
-
-        public async Task LinkToCompany(string companyId, string cashierId)
-        {
-            await context.CashierCompanies.AddAsync(new CashierCompany
-            {
-                CashierId = cashierId,
-                UserId = companyId
-            });
-
-            await context.SaveChangesAsync();
-        }
     }
 }
