@@ -8,5 +8,11 @@
             public const int PasswordMinLength = 6;
             public const int PasswordMaxLength = 100;
         }
+
+        public static class ProductConstants
+        {
+            public const int NameMaxLength = 100;
+            public const int BarcodeMaxLength = 30;
+        }
     }
 }
