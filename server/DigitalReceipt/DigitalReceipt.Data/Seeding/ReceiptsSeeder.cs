@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace DigitalReceipt.Data.Seeding
@@ -10,18 +11,15 @@ namespace DigitalReceipt.Data.Seeding
     {
         public async Task SeedAsync(ApplicationDbContext dbContext, IServiceProvider serviceProvider)
         {
-            var random = new Random();
-            var companies = new List<Company>();
-            for (int i = 0; i < 3; i++)
+            if (dbContext.Receipts.Any())
             {
-                companies.Add(new Company
-                {
-                    Name = $"Firm {i + 1}"
-                });
+                return;
             }
 
+var random = new Random();
+            List<Company> companies = GenerateCompanies();
+            List<Product> products = GenerateProducts().ToList();
             string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith("root"))?.Id;
-
             for (int i = 1; i <= 20; i++)
             {
                 var receipt = new Receipt
@@ -39,11 +37,11 @@ namespace DigitalReceipt.Data.Seeding
                     ClientNumber = $"{random.Next(1000, 9999999)}",
                     IdFiscalNumber = $"BML{random.Next(100, 9999) * i}",
                     UserId = userId,
-                    Products = GenerateProducts(random.Next(0, 5))
-                        .Select(product => new ReceiptProduct
+                    Products = SelectProducts(products, random.Next(products.Count * 2))
+                        .Select(kvp => new ReceiptProduct
                         {
-                            Product = product,
-                            Quantity = 1
+                            Product = kvp.Key,
+                            Quantity = kvp.Value
                         })
                         .ToList(),
                 };
@@ -52,20 +50,53 @@ namespace DigitalReceipt.Data.Seeding
             }
         }
 
-        private IEnumerable<Product> GenerateProducts(int count)
+        private static List<Company> GenerateCompanies()
+        {
+            var companies = new List<Company>();
+            for (int i = 0; i < 3; i++)
+            {
+                companies.Add(new Company
+                {
+                    Name = $"Firm {i + 1}"
+                });
+            }
+
+            return companies;
+        }
+
+        private IEnumerable<Product> GenerateProducts()
         {
             var random = new Random();
             var products = new List<string> { "Coca cola", "Monster", "RedBull", "Jelly Beans", "Water" };
-            for (int i = 0; i < count; i++)
+            foreach (var productName in products)
             {
                 yield return new Product
                 {
                     Barcode = $"{random.Next(1000000, 99999999)}",
-                    Name = products[random.Next(products.Count)],
+                    Name = productName,
                     Discount = (decimal)(random.Next(0, 10) * 0.1),
                     Price = (decimal)(random.Next(10, 30) * 0.1)
                 };
             }
+        }
+
+        private IDictionary<Product, int> SelectProducts(IList<Product> products, int count)
+        {
+            Random random = new Random();
+            var receiptPtoducts = new Dictionary<Product, int>();
+
+            for (int i = 0; i < count; i++)
+            {
+                var product = products[random.Next(products.Count)];
+                if(!receiptPtoducts.ContainsKey(product))
+                {
+                    receiptPtoducts[product] = 0;
+                }
+
+                receiptPtoducts[product]++;
+            }
+
+            return receiptPtoducts;
         }
     }
 }
