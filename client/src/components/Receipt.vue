@@ -52,7 +52,6 @@ export default {
                 .get("/api/Receipts")
                 .then((response) => {
                     self.firmsWithReceipts = response.data;
-                    console.log(response);
                 })
                 .catch((err) => {
                     console.log(err);

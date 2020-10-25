@@ -2,14 +2,16 @@
     <div class="container login-container">
         <div class="login-form-1">
             <h2>Statistics</h2>
-            <bar
+            <bar-chart
                 v-if="loadedDataNames"
                 :chartdata="chartByName"
-                :options="options"/>
-            <bar
+                :options="options"
+            />
+            <bar-chart
                 v-if="loadedDataCategories"
                 :chartdata="chartByCategory"
-                :options="options"/>
+                :options="options"
+            />
             <!-- <b-tabs content-class="mt-3">
                 <b-tab
                     v-for="stat in this.statisticsByName"
@@ -31,11 +33,12 @@
 </template>
 
 <script>
-import {Bar} from "vue-chartjs"
+import BarChart from "./Chart";
 
 export default {
-    components:{
-        Bar
+    name: "Stats",
+    components: {
+        BarChart,
     },
     data: () => ({
         loadedDataNames: false,
@@ -44,76 +47,81 @@ export default {
         statisticsByCategory: [],
         chartByName: {
             labels: [],
-            datasets: []
+            datasets: [],
         },
         chartByCategory: {
             labels: [],
-            datasets: []
+            datasets: [],
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false
-        }
+            maintainAspectRatio: false,
+        },
     }),
     methods: {
         fetchStatisticsByProductNameData: function () {
             let self = this;
-            return new Promise((resolve, reject)=>{
-               this.$http
-                .get("/api/Statistics/SpendingByProductName")
-                .then((response) => {
-                    self.statisticsByName = response.data;
-                    resolve(response.data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    reject(err);
-                }); 
+            return new Promise((resolve, reject) => {
+                this.$http
+                    .get("/api/Statistics/SpendingByProductName")
+                    .then((response) => {
+                        self.statisticsByName = response.data;
+                        resolve(response.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        reject(err);
+                    });
             });
         },
         fetchStatisticsByProductCategoryData: function () {
             let self = this;
-            return new Promise((resolve, reject)=>{
-               this.$http
-                .get("/api/Statistics/SpendingByProductCategory")
-                .then((response) => {
-                    self.statisticsByCategory = response.data;
-                    resolve(response.data);
-                })
-                .catch((err) => {
-                    console.log(err);
-                    reject(err);
-                }); 
+            return new Promise((resolve, reject) => {
+                this.$http
+                    .get("/api/Statistics/SpendingByProductCategory")
+                    .then((response) => {
+                        self.statisticsByCategory = response.data;
+                        resolve(response.data);
+                    })
+                    .catch((err) => {
+                        console.log(err);
+                        reject(err);
+                    });
             });
         },
-        populateChartByNameData: function (){
+        populateChartByNameData: function () {
             for (const stat of this.statisticsByName) {
                 this.chartByName.labels.push(stat.key);
-                this.chartByName.datasets.push({backgroundColor: '#000', data: stat.value})
+                this.chartByName.datasets.push({
+                    backgroundColor: "#000",
+                    data: stat.value,
+                });
             }
-            console.log(this.statisticsByName)
-            console.log(this.chartByName)
-            this.loadedDataNames = true
+            console.log(this.statisticsByName);
+            console.log(this.chartByName);
+            this.loadedDataNames = true;
         },
-        populateChartByCategoryData: function (){
+        populateChartByCategoryData: function () {
             for (const stat of this.statisticsByCategory) {
                 this.chartByCategory.labels.push(stat.key);
-                this.chartByCategory.datasets.push({backgroundColor: '#000', data: stat.value})
+                this.chartByCategory.datasets.push({
+                    backgroundColor: "#000",
+                    data: stat.value,
+                });
             }
-            console.log(this.statisticsByName)
-            console.log(this.chartByCategory)
-            this.loadedDataCategories = true
-        }
+            console.log(this.statisticsByName);
+            console.log(this.chartByCategory);
+            this.loadedDataCategories = true;
+        },
     },
     mounted: function () {
-        this.loadedDataNames = false
-        this.loadedDataCategories = false
-        this.fetchStatisticsByProductNameData()
-        .then(()=>{
+        console.log(BarChart);
+        this.loadedDataNames = false;
+        this.loadedDataCategories = false;
+        this.fetchStatisticsByProductNameData().then(() => {
             this.populateChartByNameData();
         });
-        this.fetchStatisticsByProductCategoryData()
-        .then(()=>{
+        this.fetchStatisticsByProductCategoryData().then(() => {
             this.populateChartByCategoryData();
         });
     },

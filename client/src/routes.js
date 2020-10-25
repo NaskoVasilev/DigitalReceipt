@@ -22,7 +22,10 @@ const authGuard = async (to, from, next) => {
         if (!store.getters.loggedIn) {
             next();
         } else {
-            next('/');
+            if (store.getters.hasAdminRights === true) {
+                next('/admin/home')
+            }
+            next('/home');
         }
     });
 };

@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from './icons'
 import axios from 'axios'
 import VueQrCode from 'vue-qrcode'
 import VueQrcodeReader from "vue-qrcode-reader";
+import { BarChart } from './components/Chart.vue';
 
 Vue.config.productionTip = false
 
@@ -26,6 +27,7 @@ Vue.use(VueQrcodeReader)
 Vue.prototype.$cookies = VueCookies
 Vue.component('icon', FontAwesomeIcon)
 Vue.component('qrcode', VueQrCode)
+Vue.component('bar-chart', BarChart)
 
 sync(store, router)
 
