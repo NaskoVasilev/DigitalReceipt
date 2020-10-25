@@ -24,7 +24,7 @@ namespace DigitalReceipt.Services
             var receiptProducts = new List<ReceiptProduct>();
             foreach (var product in model.Products)
             {
-                int? productId = context.Products
+                int productId = context.Products
                     .Where(p => p.Barcode == product.Barcode)
                     .Select(p => p.Id)
                     .FirstOrDefault();
@@ -34,9 +34,9 @@ namespace DigitalReceipt.Services
                     Quantity = product.Quantity
                 };
 
-                if(productId.HasValue)
+                if(productId == default)
                 {
-                    receiptProduct.ProductId = productId.Value;
+                    receiptProduct.ProductId = productId;
                 }
                 else
                 {
@@ -82,6 +82,7 @@ namespace DigitalReceipt.Services
                     CompanyName = r.Key,
                     Receipts = r.ToList()
                 })
+                .OrderBy(r => r.CompanyName)
                 .ToList();
         }
     }
