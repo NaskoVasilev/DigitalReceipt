@@ -9,7 +9,8 @@ import { FontAwesomeIcon } from './icons'
 import axios from 'axios'
 import VueQrCode from 'vue-qrcode'
 import VueQrcodeReader from "vue-qrcode-reader";
-import { BarChart } from './components/Chart.vue';
+import BarChart from './components/Chart.vue';
+import moment from 'moment';
 
 Vue.config.productionTip = false
 
@@ -28,6 +29,12 @@ Vue.prototype.$cookies = VueCookies
 Vue.component('icon', FontAwesomeIcon)
 Vue.component('qrcode', VueQrCode)
 Vue.component('bar-chart', BarChart)
+
+Vue.filter('formatDate', function (value) {
+  if (value) {
+    return moment(String(value)).format('DD/MM/YYYY hh:mm')
+  }
+})
 
 sync(store, router)
 

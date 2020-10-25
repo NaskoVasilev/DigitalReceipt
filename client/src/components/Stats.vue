@@ -33,12 +33,12 @@
 </template>
 
 <script>
-import BarChart from "./Chart";
+// import BarChart from "./Chart";
 
 export default {
     name: "Stats",
     components: {
-        BarChart,
+        // BarChart,
     },
     data: () => ({
         loadedDataNames: false,
@@ -47,11 +47,23 @@ export default {
         statisticsByCategory: [],
         chartByName: {
             labels: [],
-            datasets: [],
+            datasets: [
+                {
+                    label: "Data by product name",
+                    backgroundColor: "blue",
+                    data: [],
+                },
+            ],
         },
         chartByCategory: {
             labels: [],
-            datasets: [],
+            datasets: [
+                {
+                    label: "Data by product category",
+                    backgroundColor: "green",
+                    data: [],
+                },
+            ],
         },
         options: {
             responsive: true,
@@ -92,10 +104,7 @@ export default {
         populateChartByNameData: function () {
             for (const stat of this.statisticsByName) {
                 this.chartByName.labels.push(stat.key);
-                this.chartByName.datasets.push({
-                    backgroundColor: "#000",
-                    data: stat.value,
-                });
+                this.chartByName.datasets[0].data.push(stat.value);
             }
             console.log(this.statisticsByName);
             console.log(this.chartByName);
@@ -104,18 +113,16 @@ export default {
         populateChartByCategoryData: function () {
             for (const stat of this.statisticsByCategory) {
                 this.chartByCategory.labels.push(stat.key);
-                this.chartByCategory.datasets.push({
-                    backgroundColor: "#000",
-                    data: stat.value,
-                });
+                this.chartByCategory.datasets[0].data.push(stat.value);
+                console.log("Hi");
+                console.log(stat);
             }
-            console.log(this.statisticsByName);
             console.log(this.chartByCategory);
             this.loadedDataCategories = true;
         },
     },
     mounted: function () {
-        console.log(BarChart);
+        // console.log(BarChart);
         this.loadedDataNames = false;
         this.loadedDataCategories = false;
         this.fetchStatisticsByProductNameData().then(() => {

@@ -11,12 +11,15 @@
                 >
                     <b-tabs content-class="mt-3">
                         <b-tab
-                            v-for="receipt in firm.receipts"
+                            v-for="(receipt, index) in firm.receipts"
                             :title="receipt.fiscalNumber"
-                            :key="receipt.fiscalNumber"
+                            :key="
+                                receipt.fiscalNumber + firm.companyName + index
+                            "
                             active
+                            :title-link-class="'receipts-tab'"
                         >
-                            <p>Date: {{ receipt.date }}</p>
+                            <p>Date: {{ receipt.date | formatDate }}</p>
                             <p>Cashier name: {{ receipt.cashierName }}</p>
                             <p>Number: {{ receipt.number }}</p>
                             <p>Fiscal number: {{ receipt.fiscalNumber }}</p>
