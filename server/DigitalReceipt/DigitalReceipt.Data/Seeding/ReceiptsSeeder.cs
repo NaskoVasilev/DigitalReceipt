@@ -19,8 +19,7 @@ namespace DigitalReceipt.Data.Seeding
             var random = new Random();
             List<Company> companies = GenerateCompanies();
             List<Product> products = GenerateProducts().ToList();
-
-            string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith("nasko"))?.Id;
+            string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith("root"))?.Id;
 
             for (int i = 1; i <= 20; i++)
             {
