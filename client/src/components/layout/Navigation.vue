@@ -2,7 +2,7 @@
     <div class="main-nav">
         <nav class="navbar navbar-expand-lg navbar-dark bg-vue">
             <router-link to="/" tag="a" class="navbar-brand"
-                >Digital Receipt</router-link
+                >Smart Receipt</router-link
             >
             <button
                 class="navbar-toggler hamburger-menu"
@@ -34,7 +34,7 @@
                         </router-link>
                     </li>
                     <li><span class="point-separator"> • </span></li>
-                   <li
+                    <li
                         v-if="isUserAuthenticated && hasAdminRights"
                         class="nav-item"
                         v-for="(route, index) in adminRoutes"
