@@ -7,40 +7,53 @@ import BootstrapVue from 'bootstrap-vue'
 import VueCookies from 'vue-cookies'
 import { FontAwesomeIcon } from './icons'
 import axios from 'axios'
+import VueQrCode from 'vue-qrcode'
+import VueQrcodeReader from "vue-qrcode-reader";
 
 Vue.config.productionTip = false
 
-Vue.prototype.$http = axios
+const axiosConfig = {
+  baseURL: 'https://localhost:44316/',
+  timeout: 30000,
+};
+
+let http = axios.create(axiosConfig)
 
 Vue.use(BootstrapVue)
 Vue.use(VueCookies)
+Vue.use(VueQrcodeReader)
 
 Vue.prototype.$cookies = VueCookies
 Vue.component('icon', FontAwesomeIcon)
+Vue.component('qrcode', VueQrCode)
 
 sync(store, router)
 
-axios.interceptors.request.use(
+http.interceptors.request.use(
   (config) => {
-      let token = VueCookies.get('access_token') || null;
+    config.headers['Content-Type'] = "application/json"
 
-      if (token) {
-          config.headers['Authorization'] = `Bearer ${token}`;
-      }
+    let token = VueCookies.get('access_token') || null;
 
-      return config;
+    if (token) {
+      config.headers['Authorization'] = `Bearer ${token}`;
+    }
+
+    return config;
   },
 
   (error) => {
-      return Promise.reject(error);
+    return Promise.reject(error);
   }
 );
 
+Vue.prototype.$http = http
+
 const app = new Vue({
   el: "#app",
-    store,
-    router,
-    render: h => h(App),
+  store,
+  router,
+  render: h => h(App),
 })
 
 export {
