@@ -20,7 +20,7 @@ namespace DigitalReceipt.Data.Seeding
                 });
             }
 
-            string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith("plamen"))?.Id;
+            string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith("root"))?.Id;
 
             for (int i = 1; i <= 20; i++)
             {
