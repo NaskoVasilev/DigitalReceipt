@@ -61,40 +61,48 @@ export default {
         },
         onDecode: function (decodedString) {
             if (this.isGuid(decodedString) === true) {
-                this.$http.post("/api/Receipts", {
-                    date: "2020-10-25T00:00:00",
-                    cashierName: "QR Test Cashier",
-                    number: this.getRandomInt(1000, 9999).toString(),
-                    fiscalNumber:
-                        "BMLF" + this.getRandomInt(1000, 9999).toString(),
-                    uic: this.getRandomInt(1000000, 9999999).toString(),
-                    companyAddress: "Test Address",
-                    storeName: "Test Store",
-                    storeAddress: "Test Address 2",
-                    companyName: "QR Test Company",
-                    taxNumber:
-                        "BG" + this.getRandomInt(100000, 999999).toString(),
-                    clientNumber: this.getRandomInt(
-                        1000000,
-                        9999999
-                    ).toString(),
-                    idFiscalNumber:
-                        "BML" + this.getRandomInt(1000, 9999).toString(),
-                    userId: decodedString,
-                    products: [
-                        {
-                            name: "Organic Face Mask",
-                            barcode: "26394528",
-                            price: 5.5,
-                            discount: 0.0,
-                            category: 2,
-                            quantity: 1,
-                        },
-                    ],
-                });
-                this.alert = "Success!";
-                this.isBad = false;
-                this.dismissCountDown = 4;
+                this.$http
+                    .post("/api/Receipts", {
+                        date: "2020-10-25T00:00:00",
+                        cashierName: "QR Test Cashier",
+                        number: this.getRandomInt(1000, 9999).toString(),
+                        fiscalNumber:
+                            "BMLF" + this.getRandomInt(1000, 9999).toString(),
+                        uic: this.getRandomInt(1000000, 9999999).toString(),
+                        companyAddress: "Test Address",
+                        storeName: "Test Store",
+                        storeAddress: "Test Address 2",
+                        companyName: "QR Test Company",
+                        taxNumber:
+                            "BG" + this.getRandomInt(100000, 999999).toString(),
+                        clientNumber: this.getRandomInt(
+                            1000000,
+                            9999999
+                        ).toString(),
+                        idFiscalNumber:
+                            "BML" + this.getRandomInt(1000, 9999).toString(),
+                        userId: decodedString,
+                        products: [
+                            {
+                                name: "Organic Face Mask",
+                                barcode: "26394528",
+                                price: 5.5,
+                                discount: 0.0,
+                                category: 2,
+                                quantity: 1,
+                            },
+                        ],
+                    })
+                    .then(() => {
+                        this.alert = "Success!";
+                        this.isBad = false;
+                        this.dismissCountDown = 4;
+                    })
+                    .catch(() => {
+                        this.alert = "Invalid User";
+                        this.isBad = true;
+                        this.dismissCountDown = 4;
+                    });
             } else {
                 this.alert = "Invalid Client QR code";
                 this.isBad = true;
