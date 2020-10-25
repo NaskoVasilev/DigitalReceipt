@@ -6,6 +6,10 @@ html, body, #app {
     background: #44b684 !important;
 }
 
+.receipts-tab, .receipts-tab:link, .receipts-tab:visited, .receipts-tab:hover, .receipts-tab:active {
+    color: #44b684;
+}
+
 .btn-main {
     background: #44b684 !important;
     color: #fff !important;
