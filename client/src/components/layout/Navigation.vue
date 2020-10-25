@@ -91,6 +91,7 @@ export default {
             routes: [
                 { display: this.userEmail, path: "/home" },
                 { display: "Receipts", path: "/receipts" },
+                { display: "Statistics", path: "/statistics" },
             ],
             anonymousAccountRoutes: [
                 { display: "Register", path: "/register" },
