@@ -5,6 +5,4 @@ import './css/site.css'
 
 import { app } from './main'
 
-console.log(app)
-
 app.$mount('#app')

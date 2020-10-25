@@ -91,7 +91,10 @@
 export default {
     data() {
         return {
-            routes: [{ display: "Home", path: "/home" }],
+            routes: [
+                { display: "Home", path: "/home" },
+                { display: "Receipts", path: "/receipts" },
+            ],
             anonymousAccountRouts: [
                 { display: "Register", path: "/register" },
                 { display: "Login", path: "/login" },
@@ -112,8 +115,7 @@ export default {
     },
     methods: {
         submitLogoutForm: function () {
-            let self = this;
-            this.$store.dispatch("destroyToken").then((response) => {
+            this.$store.dispatch("destroyToken").then(() => {
                 this.$router.push({ name: "login" });
             });
         },
