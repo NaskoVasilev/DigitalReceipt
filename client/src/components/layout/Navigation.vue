@@ -34,7 +34,7 @@
                         </router-link>
                     </li>
                     <li><span class="point-separator"> • </span></li>
-                    <li
+                   <li
                         v-if="isUserAuthenticated && hasAdminRights"
                         class="nav-item"
                         v-for="(route, index) in adminRoutes"
@@ -48,13 +48,10 @@
                             <span>{{ route.display }}</span>
                         </router-link>
                     </li>
-                    <li v-if="isUserAuthenticated && hasAdminRights">
-                        <span class="point-separator"> • </span>
-                    </li>
                     <li
                         v-if="!isUserAuthenticated"
                         class="nav-item"
-                        v-for="(route, index) in anonymousAccountRouts"
+                        v-for="(route, index) in anonymousAccountRoutes"
                         :key="index + 100"
                     >
                         <router-link
@@ -69,7 +66,7 @@
                         <router-link
                             class="nav-link text-white"
                             exact-active-class="active"
-                            to="/login"
+                            to="Home"
                         >
                             <span>{{ this.userEmail }}</span>
                         </router-link>
@@ -92,14 +89,14 @@ export default {
     data() {
         return {
             routes: [
-                { display: "Home", path: "/home" },
+                { display: this.userEmail, path: "/home" },
                 { display: "Receipts", path: "/receipts" },
             ],
-            anonymousAccountRouts: [
+            anonymousAccountRoutes: [
                 { display: "Register", path: "/register" },
                 { display: "Login", path: "/login" },
             ],
-            adminRoutes: [{ display: "Home", path: "/admin/home" }],
+            adminRoutes: [{ display: this.userEmail, path: "/admin/home" }],
         };
     },
     computed: {
