@@ -25,6 +25,7 @@ namespace DigitalReceipt.Models.Products
                 .ForMember(m => m.Name, y => y.MapFrom(e => e.Product.Name))
                 .ForMember(m => m.Barcode, y => y.MapFrom(e => e.Product.Barcode))
                 .ForMember(m => m.Price, y => y.MapFrom(e => e.Product.Price))
+                .ForMember(m => m.Category, y => y.MapFrom(e => e.Product.Category))
                 .ForMember(m => m.Discount, y => y.MapFrom(e => e.Product.Discount));
         }
     }
