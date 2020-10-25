@@ -6,6 +6,7 @@ using DigitalReceipt.Models.Products;
 using DigitalReceipt.Models.Receipts;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 
 namespace DigitalReceipt.Services
@@ -34,15 +35,17 @@ namespace DigitalReceipt.Services
                     Quantity = product.Quantity
                 };
 
-                if(productId == default)
+                if(productId != default)
                 {
                     receiptProduct.ProductId = productId;
                 }
                 else
                 {
-                    var entityEntry = await context.Products.AddAsync(product.To<Product>());
-                    receiptProduct.ProductId = entityEntry.Entity.Id;
+                    var newProduct = product.To<Product>();
+                    receiptProduct.Product = newProduct;
                 }
+
+                receiptProducts.Add(receiptProduct);
             }
 
             var receipt = model.To<Receipt>();
