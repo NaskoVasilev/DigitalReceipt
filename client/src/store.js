@@ -42,8 +42,6 @@ const state = {
     userId: (VueCookies.get('access_token') != null) ? jwtDecode(VueCookies.get('access_token'))['nameid'] : '',
 }
 
-console.log(jwtDecode(VueCookies.get('access_token')))
-
 // GETTERS
 const getters = {
     loggedIn(state) {

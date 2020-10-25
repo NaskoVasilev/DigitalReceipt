@@ -2,11 +2,12 @@ import Login from './components/authentication/Login'
 import Register from './components/authentication/Register'
 import HomePage from './components/HelloWorld'
 import HomeAdmin from './components/admin/HomeAdmin'
+import Receipt from './components/Receipt'
 
 import store from './store'
 
 const guard = async (to, from, next) => {
-    store.dispatch("validateAuthentication").then(response => {
+    store.dispatch("validateAuthentication").then(() => {
         if (store.getters.loggedIn && !store.getters.hasAdminRights) {
             next();
         } else {
@@ -16,7 +17,7 @@ const guard = async (to, from, next) => {
 };
 
 const authGuard = async (to, from, next) => {
-    store.dispatch("validateAuthentication").then(response => {
+    store.dispatch("validateAuthentication").then(() => {
         if (!store.getters.loggedIn) {
             next();
         } else {
@@ -26,7 +27,7 @@ const authGuard = async (to, from, next) => {
 };
 
 const adminGuard = async (to, from, next) => {
-    store.dispatch("validateAuthentication").then(response => {
+    store.dispatch("validateAuthentication").then(() => {
         if (store.getters.loggedIn && store.getters.hasAdminRights) {
             next();
         } else {
@@ -41,6 +42,7 @@ export const routes = [
     { name: 'register', path: '/register', component: Register, beforeEnter: authGuard },
     { name: 'home', path: '/home', component: HomePage, beforeEnter: guard },
     { name: 'home-admin', path: '/admin/home', component: HomeAdmin, beforeEnter: adminGuard },
+    { name: 'receipts', path: '/receipts', component: Receipt, beforeEnter: guard },
 
     //     { name: 'page-not-found',  path: '/404', component: PageNotFound },
     { name: 'redirect', path: '*', redirect: '/login' },
