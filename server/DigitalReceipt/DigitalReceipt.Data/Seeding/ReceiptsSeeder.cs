@@ -1,4 +1,6 @@
-﻿using DigitalReceipt.Data.Models;
+﻿using DigitalReceipt.Common.Settings;
+using DigitalReceipt.Data.Models;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,10 +18,12 @@ namespace DigitalReceipt.Data.Seeding
                 return;
             }
 
-var random = new Random();
+            var appSettigs = serviceProvider.GetRequiredService<AppSettings>();
+            var random = new Random();
             List<Company> companies = GenerateCompanies();
             List<Product> products = GenerateProducts().ToList();
-            string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith("root"))?.Id;
+            string userId = dbContext.Users.FirstOrDefault(u => u.UserName.StartsWith(appSettigs.DefaultUser))?.Id;
+
             for (int i = 1; i <= 20; i++)
             {
                 var receipt = new Receipt
